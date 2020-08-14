@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CardComponent from "../components/CardComponent";
 
-const getShuffledArr = arr => {
+const getShuffledArr = (arr) => {
   const newArr = arr.slice();
   for (let i = newArr.length - 1; i > 0; i--) {
     const rand = Math.floor(Math.random() * (i + 1));
@@ -10,14 +10,11 @@ const getShuffledArr = arr => {
   return newArr;
 };
 
-const generatedId = () =>
-  Math.random()
-    .toString(36)
-    .substr(2, 9);
+const generatedId = () => Math.random().toString(36).substr(2, 9);
 
-const generateList = listFlipData => {
+const generateList = (listFlipData) => {
   const flipcards = getShuffledArr(listFlipData);
-  return flipcards.map(e => {
+  return flipcards.map((e) => {
     const freezeObj = Object.assign({}, e);
     freezeObj.id = generatedId();
     freezeObj.fliped = false;
@@ -40,8 +37,8 @@ const FlipGameContainers = ({ cards }) => {
     }
   }, [state]);
 
-  const viewFlipCard = id => {
-    const cardsUpdate = state.cards.map(card => {
+  const viewFlipCard = (id) => {
+    const cardsUpdate = state.cards.map((card) => {
       const copyCard = { ...card };
       if (copyCard.id === id) copyCard.fliped = true;
       return copyCard;
@@ -60,7 +57,7 @@ const FlipGameContainers = ({ cards }) => {
 
   const findCardsWin = (cardsUpdate, id) => {
     return {
-      cardsToUpdate: cardsUpdate.map(card => {
+      cardsToUpdate: cardsUpdate.map((card) => {
         const copyCard = { ...card };
         state.isDone++;
         return copyCard;
@@ -85,7 +82,7 @@ const FlipGameContainers = ({ cards }) => {
     }
   };
 
-  const handleChange = id => {
+  const handleChange = (id) => {
     const cardUpdate = viewFlipCard(id);
     toogleFlipCard(id, cardUpdate);
   };
@@ -107,8 +104,27 @@ const FlipGameContainers = ({ cards }) => {
       <h1>PICK FOUR CARDS</h1>
       {state.isWinned && <h3>DOES IT MEAN ANYTHING TO YOU?</h3>}
       {generateCards()}
+      <h1>
+        <button
+          className="button"
+          mat-raised-button
+          color="primary"
+          // (click)="save()"
+        >
+          Reset Cards
+        </button>
+      </h1>
     </div>
   );
 };
 
 export default FlipGameContainers;
+
+const save = (arr) => {
+  const newArr = arr.slice();
+  for (let i = newArr.length - 1; i > 0; i--) {
+    const rand = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
+  }
+  return newArr;
+};

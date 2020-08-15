@@ -99,17 +99,33 @@ const FlipGameContainers = ({ cards }) => {
     });
   };
 
+  const resetCards = () => {
+    for (let i = state.cards.length - 1; i > 0; i--) {
+      state.cards[i].fliped = false;
+      state.isWinned = false;
+    }
+    return Array.from(state.cards).map((cardInfo, id) => {
+      return (
+        <CardComponent
+          key={id}
+          handleChange={handleChange}
+          cardInfo={cardInfo}
+        />
+      );
+    });
+  };
+
   return (
     <div className="App">
       <h1>PICK FOUR CARDS</h1>
-      {state.isWinned && <h3>DOES IT MEAN ANYTHING TO YOU?</h3>}
+      {state.isWinned && <h3>TELL YOUR STORY!</h3>}
       {generateCards()}
       <h1>
         <button
-          className="button"
+          class="button"
           mat-raised-button
           color="primary"
-          // (click)="save()"
+          click={resetCards()}
         >
           Reset Cards
         </button>
@@ -119,12 +135,3 @@ const FlipGameContainers = ({ cards }) => {
 };
 
 export default FlipGameContainers;
-
-const save = (arr) => {
-  const newArr = arr.slice();
-  for (let i = newArr.length - 1; i > 0; i--) {
-    const rand = Math.floor(Math.random() * (i + 1));
-    [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
-  }
-  return newArr;
-};

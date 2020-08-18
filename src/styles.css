@@ -1,11 +1,12 @@
 html {
   background: rgb(254, 36, 254);
   height: 100%;
+  width: 100%;
 }
 
 body {
   color: white;
-  width: 343px;
+  width: 100%;
   margin: 0px auto;
   padding: 0px;
 }
@@ -33,7 +34,7 @@ h2 {
   text-transform: uppercase;
   border-radius: 10px;
   color: blueviolet;
-  background: rgb(255, 255, 255);
+  background: rgb(0, 0, 0);
 }
 
 .card {
@@ -50,8 +51,8 @@ h2 {
   object-fit: cover;
   object-position: 85% 50%;
   border-radius: 5px;
-  width: 100px;
-  height: 140px;
+  width: 150px;
+  height: 210px;
 }
 
 .winFlipImage {
@@ -62,8 +63,8 @@ h2 {
     rgba(216, 182, 29, 0.87) 0%,
     rgba(227, 200, 47, 0)
   );
-  width: 100px;
-  height: 140px;
+  width: 150px;
+  height: 210px;
 }
 
 .containerFlipImage {
@@ -79,12 +80,12 @@ h2 {
 
 .backCardImage {
   border-radius: 5px;
-  width: 100px;
-  height: 140px;
+  width: 150px;
+  height: 210px;
 }
 
 .flippyContainer {
   display: block;
-  width: 100px;
-  height: 140px;
+  width: 150px;
+  height: 210px;
 }

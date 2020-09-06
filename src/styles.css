@@ -21,7 +21,7 @@ h2 {
 }
 
 .App {
-  font-family: Righteous;
+  font-family: Gilroy;
   text-align: center;
 }
 
@@ -33,8 +33,9 @@ h2 {
   font-weight: bold;
   text-transform: uppercase;
   border-radius: 10px;
-  color: blueviolet;
-  background: rgb(0, 0, 0);
+  color: white;
+  background: black;
+  border-color: black;
 }
 
 .card {

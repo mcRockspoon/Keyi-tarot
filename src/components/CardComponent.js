@@ -6,30 +6,26 @@ class CardComponent extends React.Component {
   render() {
     const {
       handleChange,
-      cardInfo: { fliped, content, id, win }
+      cardInfo: { flipped, content, id, win }
     } = this.props;
 
     return (
       <div className="card">
         <Flippy
           className="flippyContainer"
-          style={{ display: "block", width: "100px", height: "140px" }}
-          flipOnClick={true} // default false
-          isFlipped={fliped}
+          style={{ display: "block", width: "150px", height: "210px" }}
+          isFlipped={flipped}
         >
           <FrontSide
             onClick={handleChange.bind(null, id)}
             className="containerFrontSide"
+            animationDuration="400"
           >
-            <img
-              className="backCardImage"
-              alt=""
-              src={backCard}
-              //src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/7b7afb22566939.56314d69855ab.jpg"
-            />
+            <img className="backCardImage" alt="" src={backCard} />
           </FrontSide>
           <BackSide
             className="containerFlipImage"
+            animationDuration="400"
             style={{ backgroundColor: win ? "#bfad11" : "#175852" }}
           >
             {win && <div className="winFlipImage" />}

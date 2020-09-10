@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CardComponent from "../components/CardComponent";
+// import { generate } from "rxjs";
 
-const getShuffledArr = (arr) => {
+const shuffleArray = (arr) => {
   const newArr = arr.slice();
   for (let i = newArr.length - 1; i > 0; i--) {
     const rand = Math.floor(Math.random() * (i + 1));
@@ -10,15 +11,25 @@ const getShuffledArr = (arr) => {
   return newArr;
 };
 
-const generatedId = () => Math.random().toString(36).substr(2, 9);
+const generatedId = () => Math.random();
 
 const generateList = (listFlipData) => {
-  const flipcards = getShuffledArr(listFlipData);
-  return flipcards.map((e) => {
-    const freezeObj = Object.assign({}, e);
-    freezeObj.id = generatedId();
-    freezeObj.fliped = false;
-    return freezeObj;
+  const cards = shuffleArray(listFlipData);
+  return cards.map((e) => {
+    const singleCard = Object.assign({}, e);
+    singleCard.id = generatedId();
+    singleCard.flipped = false;
+    console.log(singleCard);
+    return singleCard;
+  });
+};
+
+const resetList = (listFlipData) => {
+  return listFlipData.map((e) => {
+    const singleCard = Object.assign({}, e);
+    singleCard.id = generatedId();
+    singleCard.flipped = false;
+    return singleCard;
   });
 };
 
@@ -26,21 +37,22 @@ const FlipGameContainers = ({ cards }) => {
   const [state, setState] = useState({
     cards: generateList(cards),
     gameTurn: 1,
-    isWinned: false,
+    doneFlipping: false,
     onAnimation: false,
     isDone: 0
   });
 
   useEffect(() => {
-    if (!state.isWinned && state.isDone === 4) {
-      setState({ ...state, isWinned: true, onAnimation: true });
+    if (!state.doneFlipping && state.isDone === 4) {
+      setState({ ...state, doneFlipping: true, onAnimation: true });
     }
   }, [state]);
 
   const viewFlipCard = (id) => {
+    console.log("viewed");
     const cardsUpdate = state.cards.map((card) => {
       const copyCard = { ...card };
-      if (copyCard.id === id) copyCard.fliped = true;
+      if (copyCard.id === id) copyCard.flipped = true;
       return copyCard;
     });
 
@@ -65,7 +77,7 @@ const FlipGameContainers = ({ cards }) => {
     };
   };
 
-  const toogleFlipCard = (id, cardsUpdate) => {
+  const toggleFlippedCard = (id, cardsUpdate) => {
     const { cardsToUpdate } = findCardsWin(cardsUpdate, id);
 
     state.isDone++;
@@ -84,7 +96,7 @@ const FlipGameContainers = ({ cards }) => {
 
   const handleChange = (id) => {
     const cardUpdate = viewFlipCard(id);
-    toogleFlipCard(id, cardUpdate);
+    toggleFlippedCard(id, cardUpdate);
   };
 
   const generateCards = () => {
@@ -100,34 +112,55 @@ const FlipGameContainers = ({ cards }) => {
   };
 
   const resetCards = () => {
-    for (let i = state.cards.length - 1; i > 0; i--) {
-      state.cards[i].fliped = false;
-      state.isWinned = false;
+    if (state.doneFlipping === true) {
+      // generateCards();
+      setState({
+        ...state,
+        gameTurn: 1,
+        doneFlipping: false,
+        onAnimation: false,
+        isDone: 0,
+        cards: resetList(state.cards)
+      });
+      setTimeout(() => {
+        setState({
+          ...state,
+          gameTurn: 1,
+          doneFlipping: false,
+          onAnimation: false,
+          isDone: 0,
+          cards: generateList(state.cards)
+        });
+      }, 500);
     }
-    return Array.from(state.cards).map((cardInfo, id) => {
-      return (
-        <CardComponent
-          key={id}
-          handleChange={handleChange}
-          cardInfo={cardInfo}
-        />
-      );
-    });
+  };
+
+  const giveFortune = () => {
+    var fortune = "";
+    for (let i = state.cards.length - 1; i > 0; i--) {
+      if (state.cards[i].flipped === true) {
+        fortune = fortune.concat(state.cards[i].fortune.concat("\n"));
+      }
+    }
+    return fortune;
   };
 
   return (
     <div className="App">
-      <h1>PICK FOUR CARDS</h1>
-      {state.isWinned && <h3>TELL YOUR STORY!</h3>}
-      {generateCards()}
+      <h1>KEYI CARD READER</h1>
+      {!state.doneFlipping && (
+        <h2>
+          <h2>How to play </h2>
+          <h3> Pick 4 cards</h3> <h3> Read your fortune </h3>{" "}
+          <h3> Presse RESET to repeat</h3>
+        </h2>
+      )}
+
+      {state.doneFlipping && <h3>{giveFortune()}</h3>}
+      <h4>{generateCards()}</h4>
       <h1>
-        <button
-          class="button"
-          mat-raised-button
-          color="primary"
-          click={resetCards()}
-        >
-          Reset Cards
+        <button type="reset" className="button" onClick={() => resetCards()}>
+          Reset Card
         </button>
       </h1>
     </div>

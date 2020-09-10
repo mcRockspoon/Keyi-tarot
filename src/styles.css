@@ -14,10 +14,19 @@ body {
 h1 {
   margin: 8px 0px 2px;
   margin-bottom: 20px;
+  margin-top: 30px;
+  font-size: 50px;
 }
 
 h2 {
-  margin: 0px 2px;
+  margin: 10px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  color: black;
+  font-size: 20px;
+  margin: 2px;
 }
 
 .App {
@@ -25,21 +34,34 @@ h2 {
   text-align: center;
 }
 
+h4 {
+  width: 600px;
+  margin: auto;
+  text-align: center;
+}
+
 .button {
-  height: 60px;
-  flex: 1;
-  margin-top: 20px;
+  padding: 14px 40px;
+  margin-top: 5px;
+  margin-bottom: 30px;
   font-size: 20px;
   font-weight: bold;
   text-transform: uppercase;
   border-radius: 10px;
   color: white;
   background: black;
-  border-color: black;
+  /* border-color: black; */
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button:hover {
+  background-color: white;
+  color: black;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .card {
-  margin: 6px 7px;
+  margin: 6px 6px;
   display: inline-block !important;
 }
 
@@ -52,8 +74,8 @@ h2 {
   object-fit: cover;
   object-position: 85% 50%;
   border-radius: 5px;
-  width: 150px;
-  height: 210px;
+  width: 100%;
+  height: 100%;
 }
 
 .winFlipImage {
@@ -64,8 +86,8 @@ h2 {
     rgba(216, 182, 29, 0.87) 0%,
     rgba(227, 200, 47, 0)
   );
-  width: 150px;
-  height: 210px;
+  width: 100%;
+  height: 100%;
 }
 
 .containerFlipImage {
@@ -81,12 +103,12 @@ h2 {
 
 .backCardImage {
   border-radius: 5px;
-  width: 150px;
-  height: 210px;
+  width: 100%;
+  height: 100%;
 }
 
 .flippyContainer {
   display: block;
-  width: 150px;
-  height: 210px;
+  width: 100%;
+  height: 100%;
 }
